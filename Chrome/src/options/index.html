@@ -22,16 +22,6 @@
 </head>
 
 <body ng-controller="ViewerCtrl">
-    <!-- <table style="width: 80%">
-        <tr>
-            <td><input type="checkbox" id="allKeys" ng-click="updateSettings()"> Save function keys (CTRL, ALT, etc...)
-            </td>
-            <td><input type="checkbox" id="formGrabber" ng-click="updateSettings()"> Save submitted forms (Form grabber)
-            </td>
-            <td>Auto delete logs older than (days) <input type="input" id="autoDelete" ng-blur="updateSettings()"
-                    size=3></td>
-        </tr>
-    </table> -->
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Dr.Pepper</h1>
@@ -65,7 +55,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Date</th>
                     <th scope="col">Website</th>
                     <th scope="col">Keys</th>
@@ -79,46 +68,8 @@
                     <td style="word-wrap: break-word">{{log[1][2]}}</td>
                 </tr>
             </tbody>
-            <!-- <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody> -->
         </table>
     </div>
-
-
-    <!-- <table style="width: 100%; max-width: 100%; table-layout: fixed;">
-        <thead>
-            <tr>
-                <th style="width: 10%; text-align:left;">Date</th>
-                <th style="width: 17%; text-align:left;">Website</th>
-                <th style="width: 73%; text-align:left;">Keys</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="log in logs | filter:filter">
-                <td>{{log[0] | date:'MMM d h:mm a'}}</td>
-                <td><a ng-href="{{log[1][1]}}" title="{{log[1][0]}}" target="_blank">{{log[1][0]|truncate:25}}</a></td>
-                <td style="word-wrap: break-word">{{log[1][2]}}</td>
-            </tr>
-        </tbody>
-    </table> -->
 </body>
 
 </html>
