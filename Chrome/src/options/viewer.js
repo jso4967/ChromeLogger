@@ -7,8 +7,13 @@ app.controller("ViewerCtrl", function($scope) {
         $scope.logs = [];
         chrome.storage.local.get(function(logs) {
             for (var key in logs) {
-                if (key > startDate)
-                    $scope.logs.push([key, logs[key].split('^~^')]);
+                console.log("key",key);
+                console.log("logs[key]",logs[key]);
+                for(var key2 in logs[key]){
+                    if (key > startDate)
+                        console.log("logs[key][key2]",logs[key][key2]);
+                        $scope.logs.push([key+key2, logs[key][key2].split('^~^')]);
+                }
             }
             $scope.$apply();
         });
