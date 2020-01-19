@@ -45,17 +45,17 @@ app.controller("ViewerCtrl", function($scope) {
 
     /* Save settings */
     $scope.updateSettings = function() {
-        var allKeys = document.getElementById("allKeys").checked;
-        var formGrabber = document.getElementById("formGrabber").checked;
-        var autoDelete = document.getElementById("autoDelete").value;
-        chrome.storage.sync.set({allKeys: allKeys, formGrabber: formGrabber, autoDelete: autoDelete}, function() { alert("Settings saved"); });
+        // var allKeys = document.getElementById("allKeys").checked;
+        // var formGrabber = document.getElementById("formGrabber").checked;
+        // var autoDelete = document.getElementById("autoDelete").value;
+        // chrome.storage.sync.set({allKeys: allKeys, formGrabber: formGrabber, autoDelete: autoDelete}, function() { alert("Settings saved"); });
     }
 
     /* Load settings */
     chrome.storage.sync.get(function(settings) {
-        document.getElementById("allKeys").checked = settings.allKeys;
-        document.getElementById("formGrabber").checked = settings.formGrabber;
-        document.getElementById("autoDelete").value = settings.autoDelete;
+        // document.getElementById("allKeys").checked = settings.allKeys;
+        // document.getElementById("formGrabber").checked = settings.formGrabber;
+        // document.getElementById("autoDelete").value = settings.autoDelete;
     });
 
     $scope.load(0);

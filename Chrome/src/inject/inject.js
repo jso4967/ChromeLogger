@@ -3,6 +3,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
         chrome.tabs.executeScript(tabId, {
             allFrames: true, 
             file: 'src/inject/payload.js'
-        });
+        }, ()=>chrome.runtime.lastError);
     }
 });

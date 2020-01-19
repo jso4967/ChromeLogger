@@ -17,5 +17,6 @@
     "tabs",
     "storage",
     "unlimitedStorage"
-  ]
+  ],
+  "content_security_policy": "script-src 'self' https://stackpath.bootstrapcdn.com https://code.jquery.com https://cdn.jsdelivr.net; object-src 'self'"
 }
