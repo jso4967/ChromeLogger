@@ -10,8 +10,11 @@
 
 ![image](https://user-images.githubusercontent.com/33389418/72714737-90eead80-3bb2-11ea-9e98-a4386d892666.png)
 ===
+<p>
 <img src="https://user-images.githubusercontent.com/33389418/72714824-bbd90180-3bb2-11ea-82e3-0864e687d14e.png" width="300" height="300">
 <img src="https://user-images.githubusercontent.com/33389418/72714791-a8c63180-3bb2-11ea-8586-b83f68849caf.png" width="300">
+</p>
+
 ===
 
 ### Functions
