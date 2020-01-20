@@ -15,8 +15,6 @@
 <img src="https://user-images.githubusercontent.com/33389418/72714791-a8c63180-3bb2-11ea-8586-b83f68849caf.png" width="300">
 </p>
 
-===
-
 ### Functions
 - Like **digital undertaker**, it shows you all the inputs you ever made 
   - Log valuable data from lots of keyboard inputs
