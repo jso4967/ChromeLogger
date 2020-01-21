@@ -7,14 +7,13 @@
     <script src="lib/ng-quick-date.js"></script>
     <link rel="stylesheet" type="text/css" href="lib/ng-quick-date-plus-default-theme.css" media="all" />
     <script src="viewer.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -31,10 +30,21 @@
     <div class="container" style="width: 80%">
         <div class="row">
             <div class="col-sm-2">
-                <quick-datepicker default-time="0" placeholder="Select Start Date" label-format="MMM d h:mm a"
-                    ng-change="date()" ng-model="aDatepicker"></quick-datepicker>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <quick-datepicker default-time="0" placeholder="Start Date" label-format="yy.MM.dd"
+                            ng-change="date()" ng-model="aDatepicker"></quick-datepicker>
+                    </div>
+                    <div class="col-xs-2" style = 'text-align:center'>
+                        ~
+                    </div>
+                    <div class="col-xs-5">
+                        <quick-datepicker default-time="0" placeholder="End Date" label-format="yy.MM.dd"
+                            ng-change="date()" ng-model="bDatepicker"></quick-datepicker>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-6">
                 <div class="input-group">
                     <input type="text" class="form-control" ng-model="filter" placeholder="Websites, URL's, keys"
                         aria-label="Websites, URL's, keys" aria-describedby="button-addon2">
@@ -58,14 +68,16 @@
                     <th scope="col">Date</th>
                     <th scope="col">Website</th>
                     <th scope="col">Keys</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr scope="row" ng-repeat="log in logs | filter:filter">
-                    <td>{{log[0] | date:'MMM d h:mm a'}}</td>
+                    <td>{{log[0].split('/')[0] | date:'MMM d h:mm a'}}</td>
                     <td><a ng-href="{{log[1][1]}}" title="{{log[1][0]}}" target="_blank">{{log[1][0]|truncate:25}}</a>
                     </td>
                     <td style="word-wrap: break-word">{{log[1][2]}}</td>
+                    <td width = "0" ><button type="button" class="btn btn-danger" ng-click="delete_one(log[0])">X</button></td>
                 </tr>
             </tbody>
         </table>

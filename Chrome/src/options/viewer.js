@@ -1,28 +1,48 @@
 var app = angular.module('app', ['filters', 'ngQuickDate']);
+var start_date = (new Date()).valueOf() - 1000*3600*24;
+var end_date = new Date().getTime();
+
+var default_start_date = (new Date()).valueOf() - 1000*3600*24;
+var default_end_date = new Date().getTime();
 
 app.controller("ViewerCtrl", function($scope) {
 
     /* Load logs, startDate should be a JS timestamp */
-    $scope.load = function(startDate) {
+    $scope.load = function(startDate, endDate) {
+        if(startDate == 0) startDate = default_start_date;
+        if(endDate == 0) endDate = default_end_date;
         $scope.logs = [];
         chrome.storage.local.get(function(logs) {
             for (var key in logs) {
-                console.log("key",key);
-                console.log("logs[key]",logs[key]);
                 for(var key2 in logs[key]){
-                    if (key > startDate)
-                        console.log("logs[key][key2]",logs[key][key2]);
-                        $scope.logs.push([key+key2, logs[key][key2].split('^~^')]);
+                    if (key > startDate && key<endDate){
+                        $scope.logs.push([key+"/"+key2, logs[key][key2].split('^~^')]);
+                    }
                 }
             }
+            $scope.logs.reverse();
             $scope.$apply();
         });
     }
     
     /* Called when new date is picked */ 
     $scope.date = function() {
-        $scope.load(new Date($scope.aDatepicker).getTime());
+        if($scope.aDatepicker){
+            start_date = new Date($scope.aDatepicker).getTime();
+        }
+        else{
+            start_date = default_start_date;
+        }
+        if($scope.bDatepicker){
+            end_date = new Date($scope.bDatepicker).getTime();
+        }
+        else{
+            end_date = default_end_date;
+        }
+        console.log(start_date + " " + end_date);
+        $scope.load(start_date, end_date);
     }
+
 
     /* Delete old logs */
     $scope.delete = function() {
@@ -37,28 +57,40 @@ app.controller("ViewerCtrl", function($scope) {
             chrome.storage.local.remove(toDelete, function() {
                 alert(toDelete.length + " entries deleted");
                 $scope.aDatepicker = 0;
-                $scope.load(0);
+                $scope.load(start_date,end_date);
             });
             $scope.$apply();
         });
     }
 
-    /* Save settings */
-    $scope.updateSettings = function() {
-        // var allKeys = document.getElementById("allKeys").checked;
-        // var formGrabber = document.getElementById("formGrabber").checked;
-        // var autoDelete = document.getElementById("autoDelete").value;
-        // chrome.storage.sync.set({allKeys: allKeys, formGrabber: formGrabber, autoDelete: autoDelete}, function() { alert("Settings saved"); });
+
+    /* Delete one logs */
+    $scope.delete_one = function(log) {
+        console.log(log.split('/')[0]);
+        chrome.storage.local.remove(log.split('/')[0], function(item) {
+            console.log("element deleted");
+            $scope.load(start_date,end_date);
+            $scope.$apply();
+        });
+        
     }
 
-    /* Load settings */
-    chrome.storage.sync.get(function(settings) {
-        // document.getElementById("allKeys").checked = settings.allKeys;
-        // document.getElementById("formGrabber").checked = settings.formGrabber;
-        // document.getElementById("autoDelete").value = settings.autoDelete;
-    });
+    // /* Save settings */
+    // $scope.updateSettings = function() {
+    //     var allKeys = document.getElementById("allKeys").checked;
+    //     var formGrabber = document.getElementById("formGrabber").checked;
+    //     var autoDelete = document.getElementById("autoDelete").value;
+    //     chrome.storage.sync.set({allKeys: allKeys, formGrabber: formGrabber, autoDelete: autoDelete}, function() { alert("Settings saved"); });
+    // }
 
-    $scope.load(0);
+    // /* Load settings */
+    // chrome.storage.sync.get(function(settings) {
+    //     document.getElementById("allKeys").checked = settings.allKeys;
+    //     document.getElementById("formGrabber").checked = settings.formGrabber;
+    //     document.getElementById("autoDelete").value = settings.autoDelete;
+    // });
+
+    $scope.load(0,0);
 
 });
 
