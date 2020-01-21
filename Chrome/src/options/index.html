@@ -21,10 +21,10 @@
 </head>
 
 <body ng-controller="ViewerCtrl">
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" style="padding:2%">
         <div class="container">
-            <h1 class="display-4">Dr.Pepper</h1>
-            <p class="lead">This is a chrome web extension key logger for digital undertaker</p>
+            <h1 class="display-4">InputRecorder</h1>
+            <p class="lead">Log all your postings, comments in one app, you can find easily whatever you wrote before!</p>
         </div>
     </div>
     <div class="container" style="width: 80%">
@@ -73,11 +73,10 @@
             </thead>
             <tbody>
                 <tr scope="row" ng-repeat="log in logs | filter:filter">
-                    <td>{{log[0].split('/')[0] | date:'MMM d h:mm a'}}</td>
-                    <td><a ng-href="{{log[1][1]}}" title="{{log[1][0]}}" target="_blank">{{log[1][0]|truncate:25}}</a>
-                    </td>
-                    <td style="word-wrap: break-word">{{log[1][2]}}</td>
-                    <td width = "0" ><button style="line-height: 1;" type="button" class="btn btn-danger" ng-click="delete_one(log[0])">X</button></td>
+                    <td style="padding:0.5%">{{log[0].split('/')[0] | date:'MMM d h:mm a'}}</td>
+                    <td style="padding:0.5%"><a ng-href="{{log[1][1]}}" title="{{log[1][0]}}" target="_blank">{{log[1][0]|truncate:25}}</a></td>
+                    <td style="padding:0.5%; word-wrap: break-word">{{log[1][2]}}</td>
+                    <td style="padding:0.5%" width = "0" ><button style="line-height: 0.5;" type="button" class="btn btn-danger" ng-click="delete_one(log[0])">X</button></td>
                 </tr>
             </tbody>
         </table>
