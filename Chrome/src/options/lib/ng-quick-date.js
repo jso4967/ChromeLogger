@@ -15,10 +15,10 @@
         closeButtonHtml: '&times;',
         nextLinkHtml: 'Next &rarr;',
         prevLinkHtml: '&larr; Prev',
-        disableTimepicker: false,
+        disableTimepicker: true,
         disableClearButton: false,
         defaultTime: null,
-        dayAbbreviations: ["Su", "M", "Tu", "W", "Th", "F", "Sa"],
+        dayAbbreviations: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
         dateFilter: null,
         parseDateFunction: function(str) {
           var seconds;

