@@ -3,6 +3,7 @@
   "version": "1.0.4",
   "manifest_version": 2,
   "description": "Log all your postings, comments in one app, you can find easily whatever u wrote before!",
+  "browser_action": {},
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
