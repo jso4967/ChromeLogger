@@ -1,12 +1,12 @@
 {
-  "name": "InputLogger",
+  "name": "InputRecorder",
   "version": "1.0.4",
   "manifest_version": 2,
   "description": "Log all your postings, comments in one app, you can find easily whatever u wrote before!",
   "icons": {
-    "16": "icons/dr-pepper16.png",
-    "48": "icons/dr-pepper48.png",
-    "128": "icons/dr-pepper128.png"
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
   },
   "options_page": "src/options/index.html",
   "background": {

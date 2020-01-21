@@ -13,19 +13,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
 </head>
 
 <body ng-controller="ViewerCtrl">
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" style="padding:2%">
         <div class="container">
-            <h1 class="display-4">Dr.Pepper</h1>
-            <p class="lead">This is a chrome web extension key logger for digital undertaker</p>
+            <h1 class="display-4">InputRecorder</h1>
+            <p class="lead">Log all your postings, comments in one app, you can find easily whatever you wrote before!</p>
         </div>
     </div>
     <div class="container" style="width: 80%">
@@ -62,10 +59,9 @@
             </thead>
             <tbody>
                 <tr scope="row" ng-repeat="log in logs | filter:filter">
-                    <td>{{log[0] | date:'MMM d h:mm a'}}</td>
-                    <td><a ng-href="{{log[1][1]}}" title="{{log[1][0]}}" target="_blank">{{log[1][0]|truncate:25}}</a>
-                    </td>
-                    <td style="word-wrap: break-word">{{log[1][2]}}</td>
+                    <td style="padding:0.5%">{{log[0] | date:'MMM d h:mm a'}}</td>
+                    <td style="padding:0.5%"><a ng-href="{{log[1][1]}}" title="{{log[1][0]}}" target="_blank">{{log[1][0]|truncate:25}}</a></td>
+                    <td style="padding:0.5%;word-wrap: break-word">{{log[1][2]}}</td>
                 </tr>
             </tbody>
         </table>

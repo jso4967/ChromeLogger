@@ -1,5 +1,4 @@
-## InputLogger
----
+# InputRecorder
 
 ![](https://img.shields.io/badge/platfrom-chrome%20extension-green)
 ![](https://img.shields.io/badge/language-javascript-yellow)
